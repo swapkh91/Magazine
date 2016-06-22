@@ -1,0 +1,54 @@
+<div class="single-article-container" id="single-article-container" ng-controller="ArticleController"
+     data-content="<%= render(partial: 'show', formats: [:json]) %>">
+
+  <div ng-show="single_article">
+    <div style="margin-bottom: 16px;">
+      <h1 style="margin: 0px">{{single_article.title}}</h1>
+      <small>Submitted <%= time_ago_in_words(@article.created_at) %> ago</small>
+    </div>
+    <div style="float: left;width: calc(100% - 40px);">
+      <div style="margin-bottom: 8px">
+        {{single_article.body}}
+      </div>
+      <div>
+        <span class="label">Author: </span>
+        <span>{{single_article.author.name}}</span>
+      </div>
+    </div>
+    <div style="float: right;">
+      <a ng-show="currentUser.id == single_article.author.id" href="/articles/{{single_article.id}}/edit">Edit</a>
+    </div>
+    <div style="clear: both;"></div>
+
+    <div ng-controller="CommentsController" style="margin-top: 16px;border: solid 1px #bbb;width: calc(100% - 80px);">
+      <h3 style="margin: 8px;">Comments</h3>
+
+      <%- if @comments.present? %>
+        <div style="margin: 0px 8px 16px;">
+          <ul class="primary-comments">
+            <%= render(partial: 'comments/comment', collection: @comments) %>
+          </ul>
+        </div>
+      <%- end %>
+      <%- if @comments.blank? %>
+        <div style="margin: 0px 8px 16px;">No comments yet!</div>
+      <%- end %>
+
+      <div ng-show="currentUser" style="border: solid 1px #bbb;margin: 8px;">
+        <div class="commenter-name">{{currentUser.name}}</div>
+        <div style="margin: 8px 16px;">
+          <%= form_for [@article, Comment.new] do |f| %>
+            <%= f.text_area :body, placeholder: "Your Comment", size: '50x5', :required => true %><br/>
+            <%= f.submit "Add Comment" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-hide="single_article">
+    <span>Article Not Found!</span>
+  </div>
+  <div style="margin-top: 16px;">
+    <a href="/articles">Back to all articles</a>
+  </div>
+</div>

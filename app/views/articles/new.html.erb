@@ -1,0 +1,12 @@
+<div class="new-article-container" ng-controller="NewArticleController">
+  <h1>New Article</h1>
+  <div class="form-container">
+    <%= render 'form' %>
+
+    <button type="button" ng-click="createArticle()">Create Article</button>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <a href="/articles">Back to all articles</a>
+  </div>
+</div>

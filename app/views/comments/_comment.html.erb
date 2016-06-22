@@ -1,0 +1,29 @@
+<li>
+  <div style="margin-bottom: 16px;border: solid 1px #bbb;">
+    <div class="commenter-name">
+      <%= comment.user.name %>
+      <small style="padding-left: 8px;"><%= time_ago_in_words(comment.created_at) %> ago</small>
+    </div>
+    <div style="margin: 8px 16px;"><%= comment.body %></div>
+  <div style="margin-top: 8px;" ng-show="currentUser" ng-controller="CommentController">
+    <div style="margin: 4px 16px;">
+      <button ng-hide="show_reply_box" type="button" ng-click="showReplyBox()">Reply</button>
+      <%- if comment.comments.blank? && current_user && comment.user_id == current_user.id %>
+        <%= button_to "Delete", {:controller => :comments,
+                           :action => 'destroy', :id => comment.id }, :method => :delete %>
+      <%- end %>
+    </div>
+    <div style="margin: 4px 16px;" ng-show="show_reply_box">
+      <div>{{currentUser.name}}</div>
+      <%= form_for [comment, Comment.new] do |f| %>
+        <%= f.text_area :body, placeholder: "Your Reply", size: '50x5', :required => true %><br/>
+        <%= f.submit "Reply"  %>
+      <% end %>
+    </div>
+  </div>
+  </div>
+  <ul>
+    <%= render partial: 'comments/comment', collection: comment.comments %>
+  </ul>
+
+</li>

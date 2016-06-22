@@ -1,0 +1,29 @@
+<div class="articles-container" id="articles-container" ng-controller="ArticlesController"
+     data-content="<%= render(partial: 'index', formats: [:json]) %>">
+  <h1>Magazine</h1>
+  <div class="new-article" ng-show="currentUser">
+    <a href="/articles/new">New Article</a>
+  </div>
+  <h3 ng-if="articles_data" style="margin-bottom: 0px;">Articles</h3>
+  <div class="article-container" ng-repeat="article in articles_data">
+    <div style="float: left;width: calc(100% - 40px);">
+      <div style="padding-bottom: 4px;">
+        <span class="label">Title: </span>
+        <a class="article-title" href="/articles/{{article.id}}">{{article.title}}</a>
+      </div>
+      <div style="padding-bottom: 4px;">
+        <span class="label">Body: </span>
+        <span>{{article.body}}</span>
+      </div>
+      <div style="padding-bottom: 4px;">
+        <span class="label">Author: </span>
+        <span>{{article.author.name}}</span>
+      </div>
+    </div>
+    <div style="float: right;">
+      <a ng-show="currentUser.id == article.author.id" href="/articles/{{article.id}}/edit">Edit</a>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+  <div ng-if="!articles_data">No Articles, Log In to create new!</div>
+</div>
