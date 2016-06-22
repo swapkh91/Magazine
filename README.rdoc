@@ -1,4 +1,3 @@
 == Magazine App
     Create/Edit Articles
     Add/Delete and Reply to comments
-    
