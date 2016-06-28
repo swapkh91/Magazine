@@ -1,5 +1,10 @@
 var myApp = angular.module('Magazine', ["ui.bootstrap"]);
 
+myApp.config(["$httpProvider", function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  }
+]);
+
 myApp.controller("NewArticleController", ['$scope', '$http', function($scope, $http) {
     $scope.currentUser = JSON.parse($('meta[name=current_user]').attr('content'));
 
