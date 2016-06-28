@@ -7,7 +7,17 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user_json
-    current_user.to_json
+    user = current_user
+    if user
+      result = Jbuilder.new
+
+      result.name user.name
+      result.id user.id
+
+      result.target!
+    else
+      user.to_json
+    end
   end
 
   def user_access
